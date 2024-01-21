@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login and Signup Page</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        /* Your additional styles here */
+        .switchAuth {
+            text-align: center;
+        }
+
+        #switchBtn {
+            cursor: pointer;
+            color: #3498db;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <!-- Login Form -->
+        <form class="form" id="loginForm" onsubmit="login(event)">
+            <h2>Hello!<br><span>Welcome To Kartik.GPT</span></h2>
+            <div class="inputBox">
+                <input type="text" placeholder="Username" class="inputField" id="loginUsername">
+                <i class="fa-regular fa-user"></i>
+            </div>
+            <div class="inputBox">
+                <input type="password" placeholder="Password" class="inputField" id="loginPassword">
+                <i class="fa-solid fa-lock"></i>
+            </div>
+            <div class="inputBox">
+                <input type="submit" value="Log in" class="submitButton">
+            </div>
+        </form>
+
+        <h4>OR</h4>
+        
+        <!-- Signup Form (Initially Hidden) -->
+        <form class="form hidden" id="signupForm" onsubmit="signup(event)">
+            <h2>Create Your Account</h2>
+            <div class="inputBox">
+                <input type="text" placeholder="Username" class="inputField" id="signupUsername">
+                <i class="fa-regular fa-user"></i>
+            </div>
+            <div class="inputBox">
+                <input type="email" placeholder="Email" class="inputField" id="signupEmail">
+                <i class="fa-regular fa-envelope"></i>
+            </div>
+            <div class="inputBox">
+                <input type="password" placeholder="Password" class="inputField" id="signupPassword">
+                <i class="fa-solid fa-lock"></i>
+            </div>
+            <div class="inputBox">
+                <input type="submit" value="Sign Up" class="submitButton">
+            </div>
+        </form>
+
+        <div class="switchAuth">
+            <p id="switchText">Don't have an account? <span id="switchBtn" onclick="toggleForms()">Sign Up</span></p>
+        </div>
+    </div>
+
+    <script>
+        function toggleForms() {
+            document.getElementById("loginForm").classList.toggle("hidden");
+            document.getElementById("signupForm").classList.toggle("hidden");
+        }
+
+        function signup(event) {
+            event.preventDefault();
+            // Perform signup logic, e.g., validate inputs and store in localStorage
+            const username = document.getElementById("signupUsername").value;
+            const email = document.getElementById("signupEmail").value;
+            const password = document.getElementById("signupPassword").value;
+
+            if (username && email && password) {
+                localStorage.setItem("signupUsername", username);
+                localStorage.setItem("signupEmail", email);
+                localStorage.setItem("signupPassword", password);
+                alert("Account Created Successfully!");
+                toggleForms();
+            } else {
+                alert("Please fill in all fields.");
+            }
+        }
+
+        function login(event) {
+            event.preventDefault();
+            const loginUsername = document.getElementById("loginUsername").value;
+            const loginPassword = document.getElementById("loginPassword").value;
+
+            const storedUsername = localStorage.getItem("signupUsername");
+            const storedEmail = localStorage.getItem("signupEmail");
+            const storedPassword = localStorage.getItem("signupPassword");
+
+            if ((loginUsername === storedUsername || loginUsername === storedEmail) && loginPassword === storedPassword) {
+                alert("Login Successful");
+                // Redirect to the provided website after successful login
+                window.location.href = "https://kartiklingayat.github.io/Karthik-GPT/";
+            } else {
+                alert("Invalid credentials. Please try again.");
+            }
+        }
+    </script>
+</body>
+</html>
